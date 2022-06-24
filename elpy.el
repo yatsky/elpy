@@ -451,7 +451,7 @@ This option need to bet set through `customize' or `customize-set-variable' to b
     ["Go to Definition" elpy-goto-definition
      :help "Go to the definition of the symbol at point"]
     ["Go to previous definition" pop-tag-mark
-     :active (not (ring-empty-p find-tag-marker-ring))
+     :active (> xref-marker-ring-length 0)
      :help "Return to the position"]
     ["Complete" elpy-company-backend
      :keys "M-TAB"
@@ -1756,7 +1756,7 @@ with a prefix argument)."
   "Show FILENAME at OFFSET to the user.
 
 If OTHER-WINDOW-P is non-nil, show the same in other window."
-  (ring-insert find-tag-marker-ring (point-marker))
+  (xref-push-marker-stack)
   (let ((buffer (find-file-noselect filename)))
     (if other-window-p
         (pop-to-buffer buffer t)
